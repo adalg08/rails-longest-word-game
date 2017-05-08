@@ -47,7 +47,7 @@ class TurnController < ApplicationController
   end
 
   def get_translation(word)
-    api_key = "a32ba7d7-9982-4e59-a624-047256144f82"
+    api_key = "key"
     begin
       response = open("https://api-platform.systran.net/translation/text/translate?source=en&target=fr&key=#{api_key}&input=#{word}")
       json = JSON.parse(response.read.to_s)
