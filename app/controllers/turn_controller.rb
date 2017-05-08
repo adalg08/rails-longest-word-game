@@ -1,5 +1,20 @@
 class TurnController < ApplicationController
 
+  def game
+    @grid = generate_grid(10)
+    @start_time = Time.now
+  end
+
+  def score
+    @guess = params["guess"]
+    @grid = params["grid"]
+    @start = Time.parse(params["time"])
+    @end_time = Time.now
+    @result = run_game(@guess, @grid, @start, @end_time)
+  end
+
+  private
+
   def generate_grid(grid_size)
     Array.new(grid_size) { ('A'..'Z').to_a[rand(26)] }
   end
@@ -50,21 +65,5 @@ class TurnController < ApplicationController
 
   def included?(guess, grid)
     guess.split(//).all? { |letter| guess.count(letter) <= grid.count(letter) }
-  end
-
-
-
-  def game
-    @grid = generate_grid(10)
-    @start_time = Time.now
-  end
-
-  def score
-    @guess = params["guess"]
-    @grid = params["grid"]
-    @start = Time.parse(params["time"])
-    @end_time = Time.now
-    @result = run_game(@guess, @grid, @start, @end_time)
-
   end
 end
